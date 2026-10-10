@@ -1,4 +1,4 @@
-node_modules/
-*.log
-.DS_Store
-Thumbs.db
+# Portrait frames are supplied by the user, not shipped with the repository.
+# See README: "Supplying the portraits".
+assets/*
+!assets/README.md

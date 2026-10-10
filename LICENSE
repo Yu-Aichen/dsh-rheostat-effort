@@ -22,18 +22,12 @@ SOFTWARE.
 
 ---
 
-## Third-party portrait assets
+## Portrait assets are not distributed
 
-The 24 portrait frames under `assets/` are photographs of a real person, obtained
-from the `kingOfSoySauce/dsh-liang-skin` project, which in turn credits
-`Lichtspektrum/liang-intensity-calibrator`.
+This repository contains **no portrait images**. The `assets/` directory ships
+empty, with a README describing the file names the plugin expects.
 
-The MIT license above covers **the code and documentation in this repository
-only**. It does not cover the portrait images: the maintainers of this repository
-hold no rights to the likeness, name, identity, publicity, privacy, trademark or
-copyright of the person depicted, and nothing here grants any such right.
-
-If you intend to redistribute, publish, use commercially, or create derivative
-works from this project, **replace `assets/` with imagery you are entitled to
-use** or obtain the necessary permission yourself. Files are addressed by name
-(`intensity-NN.webp`), so replacing them requires no code change.
+The user supplies those frames. They are not covered by the MIT license above,
+and the authors of this project grant no rights to any likeness, name, identity,
+publicity, privacy, trademark or copyright belonging to any person depicted in
+material a user chooses to add.

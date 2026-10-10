@@ -1,7 +1,7 @@
 {
   "name": "dsh-rheostat-effort",
   "version": "0.2.0",
-  "description": "滑动变阻器推理档位控件：把模型实际颁布的 reasoning.efforts 映射到 24 张人像锚点铺成的 0-30 强度轴，拖动只预览、松手才提交，人物铺在界面右侧背景里。",
+  "description": "滑动变阻器推理档位控件：把模型实际颁布的 reasoning.efforts 映射到 0-30 强度轴，拖动只预览、松手才提交，人物铺在界面右侧背景里。24 张强度锚点图由使用者自备。",
   "main": "./src/index.mjs",
   "exports": {
     ".": "./src/index.mjs",
@@ -12,7 +12,6 @@
     "src",
     "lib",
     "scripts",
-    "assets",
     "cordis.patch.yml",
     "README.md",
     "LICENSE"

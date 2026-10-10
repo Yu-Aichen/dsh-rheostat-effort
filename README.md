@@ -25,10 +25,10 @@ Web 与官方 Desktop 使用**独立的 profile**,装错 profile 不会生效。
 
 ```sh
 # 官方 Desktop
-dsh plugin --profile desktop add github:YOUR_NAME/dsh-rheostat-effort
+dsh plugin --profile desktop add github:Yu-Aichen/dsh-rheostat-effort
 
 # Web
-dsh plugin --profile web add github:YOUR_NAME/dsh-rheostat-effort
+dsh plugin --profile web add github:Yu-Aichen/dsh-rheostat-effort
 ```
 
 装完**完全退出并重新打开** DSH(客户端 bundle 在启动时合成,刷新页面不够)。
@@ -60,19 +60,33 @@ dsh plugin --profile desktop remove dsh-rheostat-effort
     backdropColor: 'rgb(156 157 161)'   # 底层底色,默认是量出来的影棚灰
 ```
 
-## 换掉人物图
+## 自备人物图(必读)
 
-24 张锚点写在 `lib/logic.js` 的 `ANCHOR_LEVELS`,文件名规则由 `frameName()` 决定
-(默认零填充两位)。把 `assets/intensity-NN.webp` 换成同名文件即可 —— 宿主半边每次启动重扫,
-**不需要改代码或重新打包**。
+**本仓库不包含人物图片。** `assets/` 是空的,只有一个说明文件 —— 因为那些素材是真人照片,
+而 MIT 只覆盖代码。
+
+第一次运行前请放入 **24 张锚点图**,命名固定为 `intensity-NN.webp`:
+
+```
+intensity-00  intensity-01  intensity-03  intensity-04
+intensity-06  intensity-07  intensity-09  intensity-10
+intensity-12  intensity-13  intensity-14  intensity-15
+intensity-16  intensity-17  intensity-18  intensity-19
+intensity-21  intensity-22  intensity-24  intensity-25
+intensity-27  intensity-28  intensity-29  intensity-30
+```
+
+- 这些是 `lib/logic.js` 里 `ANCHOR_LEVELS` 声明的锚点;**没有图的档位**(2/5/8/11/20/23/26)由两侧锚点交叉淡入
+- 正方形图效果最好:背景用 `object-fit: cover` 放大,可视窗口锚在右侧,所以**人物大致居中**即可
+- **不缺图也能跑**:缺哪张,那个锚点就退回相邻的已有帧;一张都没有时,背景只剩底色,滑轨与档位功能照常
+- 宿主半边**每次启动重扫**该目录,换图不需要重新打包或改代码
 
 ```powershell
-# 例如整批换图
 Copy-Item .\my-frames\*.webp .\assets\ -Force
 ```
 
-> 图片是可替换的**素材**,不是代码。见 [LICENSE](LICENSE) 的 Third-party portrait assets:
-> MIT 只覆盖代码,不覆盖肖像。对外分发前请换成你有权使用的图。
+> 请使用**你有权使用**的图片。本项目的 MIT 许可证不覆盖人物肖像、姓名、形象权或相关第三方权利,
+> 详见 [LICENSE](LICENSE)。
 
 ## 构建与测试
 
@@ -117,9 +131,9 @@ dsh-rheostat-effort/
 ├─ lib/logic.js              纯逻辑:档位↔强度、锚点插值、背景色调(无 React、无 DOM)
 ├─ lib/client.js             浏览器产物(生成,勿手改)
 ├─ scripts/build-client.mjs  打包器:加加载器包装 + 内联逻辑 + --check
-├─ assets/                   24 张强度锚点 intensity-00 … intensity-30.webp
+├─ assets/                   锚点图目录(空,自备;见上文)
 ├─ cordis.patch.yml          bundle 挂载行(id: rheostat-effort)
-├─ test/logic.test.js        8 项:映射往返、插值、边界、色调单调性、资源与锚点一一对应
+├─ test/logic.test.js        8 项:映射往返、插值、边界、色调单调性、图集校验(有图时才校验)
 ├─ test/render.test.js       40 项:产物形态、座位契约、渲染、拖动提交、键盘、开关、延迟接管
 └─ test/harness.js           测试替身:模块加载器 + 按树位置保存 hook 的 React 替身
 ```
@@ -145,11 +159,13 @@ dsh-rheostat-effort/
 
 ## 已知限制
 
+- **人物图要靠你提供**:仓库不带素材(见上文),一张图都没有时背景只有底色,滑轨仍可正常使用
 - **未做多标签同步**:偏好存在 Host 设置文档里,但同一时刻只有一个标签页在写
-- **人物图是可替换素材**,不是设计系统的一部分;换图是预期用法
 - 背景层是 `position: fixed` 的整屏层,若某个第三方皮肤也这么做,两者会叠加
 
 ## License
 
 代码与文档:[MIT](LICENSE)。
-`assets/` 下的人像素材**不在 MIT 覆盖范围内**,详见 LICENSE。
+
+**本仓库不包含任何人物图片。** `assets/` 由使用者自备,MIT 不覆盖其中素材,也不覆盖任何人的
+肖像、姓名或形象权 —— 详见 [LICENSE](LICENSE)。

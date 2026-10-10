@@ -2,19 +2,38 @@
 
 const test = require('node:test')
 const assert = require('node:assert/strict')
-const { readdirSync } = require('node:fs')
+const { readdirSync, existsSync } = require('node:fs')
 const { join } = require('node:path')
 
 const logic = require('../lib/logic.js')
 
 const ASSET_DIR = join(__dirname, '..', 'assets')
 
-test('every anchor level has exactly one shipped frame, and no frame is orphaned', () => {
+/**
+ * The portrait frames are user-supplied material, so they are deliberately not
+ * part of the repository (see README: Supplying the portraits). The layout of the
+ * frame set is still part of the contract, so this check runs whenever frames are
+ * present and reports clearly when they are not.
+ */
+test('when frames are supplied, every anchor has exactly one and none is orphaned', (t) => {
+  if (!existsSync(ASSET_DIR)) {
+    t.diagnostic('no assets/ directory: supply 24 frames named intensity-NN.webp (see README)')
+    return
+  }
   const shipped = readdirSync(ASSET_DIR)
     .filter((name) => name.endsWith('.webp'))
     .sort()
+  if (shipped.length === 0) {
+    t.diagnostic('assets/ is present but empty: supply 24 frames named intensity-NN.webp')
+    return
+  }
+
   const expected = logic.ANCHOR_LEVELS.map((level) => logic.frameName(level)).sort()
-  assert.deepEqual(shipped, expected)
+  assert.deepEqual(
+    shipped,
+    expected,
+    'the frame set must cover exactly the anchor levels declared in ANCHOR_LEVELS',
+  )
   assert.equal(shipped.length, 24)
 })
 
