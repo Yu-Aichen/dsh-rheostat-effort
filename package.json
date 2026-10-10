@@ -1,0 +1,54 @@
+{
+  "name": "dsh-rheostat-effort",
+  "version": "0.2.0",
+  "description": "滑动变阻器推理档位控件：把模型实际颁布的 reasoning.efforts 映射到 24 张人像锚点铺成的 0-30 强度轴，拖动只预览、松手才提交，人物铺在界面右侧背景里。",
+  "main": "./src/index.mjs",
+  "exports": {
+    ".": "./src/index.mjs",
+    "./client": "./lib/client.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src",
+    "lib",
+    "scripts",
+    "assets",
+    "cordis.patch.yml",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "node scripts/build-client.mjs",
+    "check": "node scripts/build-client.mjs --check && node --test test/logic.test.js test/render.test.js",
+    "test": "node --test test/logic.test.js test/render.test.js"
+  },
+  "keywords": [
+    "deepseek",
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "reasoning-effort",
+    "thinking",
+    "slider",
+    "rheostat",
+    "ui"
+  ],
+  "license": "MIT",
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-conversation",
+        "@deepseek-ai/dsh-client-ui-model-selection",
+        "@deepseek-ai/dsh-client-ui-settings-general",
+        "@deepseek-ai/dsh-client-locale"
+      ]
+    }
+  },
+  "engines": {
+    "node": ">=22.19"
+  }
+}

@@ -1,0 +1,6 @@
+# dsh-rheostat-effort bundle patch: mounts the plugin into a profile layer stack.
+# Runtime defaults live at the plugin's config boundary; users override them in
+# their profile patch row with the same id.
+- insert:
+    - id: rheostat-effort
+      name: 'dsh-rheostat-effort'
